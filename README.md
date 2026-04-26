@@ -7,5 +7,5 @@ Gustav
 Stellan
 
 ## Teknik
-HTML, CSS, JavaScript (vanilla, ingen framework)
+HTML, CSS, JavaScript.
 SMAPI för data
