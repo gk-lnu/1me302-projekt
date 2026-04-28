@@ -8,7 +8,7 @@ export async function fetchSmapi() {
         const attractions = data.payload || [];
 
        
-        const keywords = ["museum", "sevärdhet", "konsthall", "slott", "kyrka", "naturreservat", "fornlämning"];
+        const keywords = ["museum", "konsthall", "slott", "kyrka"];
 
 
         const filteredData = attractions.filter(place => {

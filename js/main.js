@@ -1,8 +1,10 @@
 import { fetchSmapi } from "./api.js";
 
-async function displayData() {
+let allPlaces = []
+
+async function init() {
     
-    const data = await fetchSmapi();
+allPlaces = await fetchSmapi();
 
     const container = document.getElementById("cards");
     
@@ -12,11 +14,18 @@ async function displayData() {
         return;
     }
 
+    renderCards(allPlaces)
+filterSetup()
+
+    
+}
+
+function renderCards(dataList) {
+    const container = document.getElementById("cards")
     container.innerHTML = ""; 
 
-
-    if (data && data.length > 0) {
-        data.forEach(place => {
+    if (dataList && dataList.length > 0) {
+        dataList.forEach(place => {
 
             const article = document.createElement("article");
             article.classList.add("card");
@@ -35,9 +44,29 @@ async function displayData() {
     } else {
      
         container.innerHTML = `<p>Inga platser hittades som matchar dina sökkriterier.</p>`;
-        console.log("Ingen data att visa:", data);
+        console.log("Ingen data att visa:", dataList);
     }
 }
 
+function filterSetup() {
+    const btn = document.querySelectorAll(".filter-btn")
 
-displayData();
+    btn.forEach(button => {
+button.addEventListener("click", (event) => {
+    const category = event.target.getAttribute("data-category")
+
+    if (category === "all") {
+        renderCards(allPlaces)
+    } else {
+        const filtered = allPlaces.filter(place => {
+            const description = place.description ? place.description.toLowerCase() : ""
+            return description.includes(category.toLowerCase())
+        })
+
+        renderCards(filtered)
+    }
+})
+    })
+}
+
+init();
