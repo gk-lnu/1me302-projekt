@@ -34,3 +34,32 @@ footer {
     color: white;
     margin-top: 2rem;
 }
+
+#filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+    align-items: center;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid #2c3e50;
+    background-color: white;
+    color: #2c3e50;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.filter-btn:hover {
+    background-color: #2c3e50;
+    color: white;
+}
+
+#sort-select {
+    padding: 0.5rem;
+    border: 2px solid #2c3e50;
+    border-radius: 4px;
+    background-color: white;
+}
