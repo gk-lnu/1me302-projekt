@@ -61,4 +61,12 @@ function renderDetail(place, distance) {
   }
 }
 
-init();
+const backLink = document.getElementById("back-link");
+  if (backLink) {
+    backLink.addEventListener("click", (e) => {
+      e.preventDefault()
+      window.history.back()
+    })
+  }
+
+init()
