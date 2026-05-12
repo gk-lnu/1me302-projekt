@@ -47,17 +47,34 @@ function renderDetail(place, distance) {
             <div class="info-box map-box" id="map"></div>
         </div>`;
 
-  if (place.lat && place.lng) {
+ if (place.lat && place.lng) {
     const lat = parseFloat(place.lat);
     const lng = parseFloat(place.lng);
-    const map = L.map("map").setView([lat, lng], 14);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: "OpenStreetMap"
+    
+   
+    const map = L.map("map", {
+        zoomControl: false 
+    }).setView([lat, lng], 14);
+
+  
+  L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}', {
+        minZoom: 0,
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        ext: 'png'
     }).addTo(map);
-    L.marker([lat, lng]).addTo(map).bindPopup(`<b>${place.name}</b>`).openPopup();
+
+   
+    L.circleMarker([lat, lng], {
+        color: '#ff0000',
+        
+    
+        radius: 5,
+        weight: 4
+    }).addTo(map).bindPopup(`<b>${place.name}</b>`).openPopup();
+    
   } else {
-    document.getElementById("map").innerHTML = "<p>Karta saknas.</p>";
+    document.getElementById("map").innerHTML = "<p style='padding:1rem; color:#888;'>Karta saknas.</p>";
   }
 }
 
