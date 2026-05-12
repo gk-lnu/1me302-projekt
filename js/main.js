@@ -59,6 +59,11 @@ function renderCards(dataList) {
                 <strong>Kategori:</strong> ${categoryName}
             </div>
         `;
+
+        article.addEventListener("click", () => {
+            const distParam = (place.distance && place.distance !== 999) ? `&distance=${place.distance}` : ""
+            window.location.href = `detail.html?id=${place.id}&controller=${place.originController}${distParam}`
+        })
     container.appendChild(article);
   });
 }
