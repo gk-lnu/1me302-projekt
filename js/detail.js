@@ -10,25 +10,38 @@ async function init() {
     return;
   }
 
-  
   const place = await fetchSingle(id);
 
   if (place) {
     renderDetail(place, distance);
   } else {
-    document.getElementById("detail-container").innerHTML = "<p>Kunde inte ladda data</p>";
+    document.getElementById("detail-container").innerHTML =
+      "<p>Kunde inte ladda data</p>";
   }
 }
 
 function renderDetail(place, distance) {
   const container = document.getElementById("detail-container");
 
-  const distText = distance && distance !== "null" ? `${distance} km från dig` : "Okänt avstånd";
-  const fullAddress = place.address ? `${place.address}, ${place.zip_code || ""} ${place.city || ""}` : "Adress saknas";
+  const distText =
+    distance && distance !== "null"
+      ? `${distance} km från dig`
+      : "Okänt avstånd";
+  const fullAddress = place.address
+    ? `${place.address}, ${place.zip_code || ""} ${place.city || ""}`
+    : "Adress saknas";
   const priceText = place.price_range || "Information saknas";
-  const webHTML = place.website ? `<div class="info-box"><small>Webbplats</small><p><a href="${place.website}" target="_blank">Besök hemsida</a></p></div>` : "";
-  const phoneHTML = place.phone_number ? `<div class="info-box"><small>Telefon</small><p>${place.phone_number}</p></div>` : "";
-  const descriptionText = place.text || place.abstract || place.description || "Ingen beskrivning tillgänglig.";
+  const webHTML = place.website
+    ? `<div class="info-box"><small>Webbplats</small><p><a href="${place.website}" target="_blank">Besök hemsida</a></p></div>`
+    : "";
+  const phoneHTML = place.phone_number
+    ? `<div class="info-box"><small>Telefon</small><p>${place.phone_number}</p></div>`
+    : "";
+  const descriptionText =
+    place.text ||
+    place.abstract ||
+    place.description ||
+    "Ingen beskrivning tillgänglig.";
   const categoryName = place.type || place.description || "Kultur";
 
   container.innerHTML = `
@@ -47,43 +60,46 @@ function renderDetail(place, distance) {
             <div class="info-box map-box" id="map"></div>
         </div>`;
 
- if (place.lat && place.lng) {
+  if (place.lat && place.lng) {
     const lat = parseFloat(place.lat);
     const lng = parseFloat(place.lng);
-    
-   
+
     const map = L.map("map", {
-        zoomControl: false 
+      zoomControl: false,
     }).setView([lat, lng], 14);
 
-  
-  L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}', {
+    L.tileLayer(
+      "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=06974496-1f7b-4063-87eb-cea816c1b2d3",
+      {
         minZoom: 0,
         maxZoom: 20,
-        attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        ext: 'png'
-    }).addTo(map);
+        attribution:
+          '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        ext: "png",
+      },
+    ).addTo(map);
 
-   
     L.circleMarker([lat, lng], {
-        color: '#ff0000',
-        
-    
-        radius: 5,
-        weight: 4
-    }).addTo(map).bindPopup(`<b>${place.name}</b>`).openPopup();
-    
+      color: "#ff0000",
+
+      radius: 5,
+      weight: 4,
+    })
+      .addTo(map)
+      .bindPopup(`<b>${place.name}</b>`)
+      .openPopup();
   } else {
-    document.getElementById("map").innerHTML = "<p style='padding:1rem; color:#888;'>Karta saknas.</p>";
+    document.getElementById("map").innerHTML =
+      "<p style='padding:1rem; color:#888;'>Karta saknas.</p>";
   }
 }
 
 const backLink = document.getElementById("back-link");
-  if (backLink) {
-    backLink.addEventListener("click", (e) => {
-      e.preventDefault()
-      window.history.back()
-    })
-  }
+if (backLink) {
+  backLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.history.back();
+  });
+}
 
-init()
+init();
