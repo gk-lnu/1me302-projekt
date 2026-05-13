@@ -96,3 +96,35 @@ footer {
     border: 1px solid #ccc;
     margin-top: 1rem;
 }
+
+.details-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1a1a1a;
+}
+
+#back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: #2c3e50;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+#back-link:hover {
+  text-decoration: underline;
+}
+
+#detail-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.details-content {
+  min-width: 0;
+}
