@@ -35,8 +35,9 @@ export async function fetchAllData(userLat = null, userLng = null) {
   const allData = [...establishments, ...attractions];
   const keywords = ["museum", "slott", "kyrka"];
   const filteredData = allData.filter((place) => {
+    const name = place.name ? place.name.toLowerCase() : ""
     const desc = place.description ? place.description.toLowerCase() : "";
-    const matchKeyword = keywords.find((keyword) => desc.includes(keyword));
+    const matchKeyword = keywords.find((keyword) => desc.includes(keyword) || name.includes(keyword));
     if (matchKeyword) {
       place.customCategory = matchKeyword;
       if (userLat !== null && userLng !== null) {
