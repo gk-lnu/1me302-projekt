@@ -164,3 +164,15 @@ footer {
   color: #343a40;
   margin: 0;
 }
+
+.details-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-box {
+  background: #f1f1f1;
+  border: 1px solid #ccc;
+  padding: 12px;
+}
