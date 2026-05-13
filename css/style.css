@@ -173,7 +173,7 @@ footer {
 
 .info-box {
   background: #f8f9fa;
-  order: 1px solid #e9ecef;
+  border: 1px solid #e9ecef;
   padding: 14px 18px;
   border-radius: 10px;
 }
