@@ -1,4 +1,4 @@
-import { fetchSingle } from "./api.js";
+import { fetchSingle, fetchImage } from "./api.js";
 
 async function init() {
   const params = new URLSearchParams(window.location.search);
@@ -13,14 +13,16 @@ async function init() {
   const place = await fetchSingle(id);
 
   if (place) {
-    renderDetail(place, distance);
+    const imgSrc = await fetchImage(place.name);
+
+    renderDetail(place, distance, imgSrc);
   } else {
     document.getElementById("detail-container").innerHTML =
       "<p>Kunde inte ladda data</p>";
   }
 }
 
-function renderDetail(place, distance) {
+function renderDetail(place, distance, imgSrc) {
   const container = document.getElementById("detail-container");
 
   const distText =
@@ -44,10 +46,16 @@ function renderDetail(place, distance) {
     "Ingen beskrivning tillgänglig.";
   const categoryName = place.type || place.description || "Kultur";
 
+  const imageHTML = imgSrc 
+    ? `<div style="margin-bottom: 1.5rem;">
+         <img src="${imgSrc.url}" alt="${place.name}" class="details-img" style="width:100%; height:300px; object-fit:cover; border-radius:8px; margin-bottom:0.5rem;">
+         <p style="font-size: 0.8rem; color: #888; margin: 0;">Foto: ${imgSrc.artist} (${imgSrc.license})</p>
+       </div>`
+    : `<div class="image-placeholder">[ Bild saknas ]</div>`;
+
   container.innerHTML = `
         <div class="details-content">
-            <div class="image-placeholder">[ Bild saknas ]</div>
-            <h1 class="details-title">${place.name}</h1>
+            ${imageHTML} <h1 class="details-title">${place.name}</h1>
             <p class="details-subtitle">Kategori: ${categoryName.toUpperCase()} &middot; ${place.city || ""}</p>
             <p class="details-desc">${descriptionText}</p>
         </div>
