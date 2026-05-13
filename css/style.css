@@ -149,3 +149,11 @@ footer {
   margin: 0 0 8px 0;
   color: #1a1a1a;
 }
+
+.details-subtitle {
+  font-size: 15px;
+  color: #6c757d;
+  margin: 0 0 24px 0;
+  text-transform: capitalize;
+  letter-spacing: 0.3px;
+}
