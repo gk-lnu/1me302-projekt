@@ -25,9 +25,12 @@ async function init() {
 function renderDetail(place, distance, imgSrc) {
   const container = document.getElementById("detail-container");
 
+  const mOrKm = parseFloat(distance);
   const distText =
-    distance && distance !== "null"
-      ? `${distance} km från dig`
+    distance && distance !== "null" && distance !== "999"
+      ? mOrKm < 1
+        ? `${Math.round(mOrKm * 1000)} meter från dig`
+        : `${mOrKm} km från dig`
       : "Okänt avstånd";
   const fullAddress = place.address
     ? `${place.address}, ${place.zip_code || ""} ${place.city || ""}`
@@ -46,7 +49,7 @@ function renderDetail(place, distance, imgSrc) {
     "Ingen beskrivning tillgänglig.";
   const categoryName = place.type || place.description || "Kultur";
 
-  const imageHTML = imgSrc 
+  const imageHTML = imgSrc
     ? `<div style="margin-bottom: 1.5rem;">
          <img src="${imgSrc.url}" alt="${place.name}" class="details-img" style="width:100%; height:300px; object-fit:cover; border-radius:8px; margin-bottom:0.5rem;">
          <p style="font-size: 0.8rem; color: #888; margin: 0;">Foto: ${imgSrc.artist} (${imgSrc.license})</p>

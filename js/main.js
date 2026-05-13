@@ -34,7 +34,9 @@ function renderCards(dataList) {
   dataList.forEach((place) => {
     const article = document.createElement("article");
     article.classList.add("card");
-    const distanceInfo = place.distance && place.distance !== 999 ? `<p><strong>${place.distance} km</strong> bort</p>` : "";
+    const mOrKm = place.distance < 1 ? `${Math.round(place.distance * 1000)} m` : `${place.distance} km`
+    const distanceInfo = place.distance && place.distance !== 999 ? `<p><strong>${mOrKm}</strong> bort</p>` : "";
+    
     const categoryName = place.customCategory ? place.customCategory.charAt(0).toUpperCase() + place.customCategory.slice(1) : "Kultur";
     article.innerHTML = `
             <img class="badge" src="./icons/${place.customCategory || "default"}.svg" alt="">
