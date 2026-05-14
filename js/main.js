@@ -19,6 +19,8 @@ async function init() {
   } else {
     await loadData();
   }
+
+  
 }
 
 async function loadData(lat = null, lng = null) {
@@ -40,7 +42,7 @@ function renderCards(dataList) {
     const categoryName = place.customCategory ? place.customCategory.charAt(0).toUpperCase() + place.customCategory.slice(1) : "Kultur";
     article.innerHTML = `
             <img class="badge" src="./icons/${place.customCategory || "default"}.svg" alt="">
-            <h2>${place.name}</h2>
+            <h2>${place.name} ID:${place.id}</h2>
             <p>${place.abstract || place.description || 'Ingen beskrivning tillgänglig'}</p>
             ${distanceInfo}
             <div class="card-footer">
@@ -53,6 +55,7 @@ function renderCards(dataList) {
     });
     container.appendChild(article);
   });
+  
 }
 
 function setupFilters() {
