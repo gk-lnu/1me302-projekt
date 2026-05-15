@@ -212,9 +212,20 @@ footer {
 }
 
 .card-main-img {
-    width: 70%;
-    height: 70%;
+    width: 100%;
+    height: 220px;
     object-fit: cover;
+    display: block;
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.details-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 24px;
     display: block;
 }
 

@@ -58,7 +58,7 @@ function renderDetail(place, distance) {
 
   container.innerHTML = `
         <div class="details-content">
-        <img src="${imageHTML}">
+        <img class="details-img" src="${imageHTML}">
              <h1 class="details-title">${place.name}</h1>
             <p class="details-subtitle">Kategori: ${categoryName.toUpperCase()} &middot; ${place.city || ""}</p>
             <p class="details-desc">${descriptionText}</p>
