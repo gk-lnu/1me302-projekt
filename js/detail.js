@@ -1,4 +1,4 @@
-import { fetchSingle } from "./api.js";
+import { fetchSingle, starRating } from "./api.js";
 
 async function init() {
   const params = new URLSearchParams(window.location.search);
@@ -13,7 +13,7 @@ async function init() {
   const place = await fetchSingle(id);
 
   if (place) {
-    
+
 
     renderDetail(place, distance);
   } else {
@@ -49,7 +49,11 @@ function renderDetail(place, distance) {
     "Ingen beskrivning tillgänglig.";
   const categoryName = place.type || place.description || "Kultur";
 
-  
+  const ratingValue = place.rating ? parseFloat(place.rating) : 0
+  const starsHTML = ratingValue > 0 ? `<div style="display:flex; align-items:center; gap:5px;">${starRating(ratingValue)} <span>${ratingValue}</span></div>`
+    : "Betyg saknas";
+
+
 
   container.innerHTML = `
         <div class="details-content">
@@ -58,6 +62,7 @@ function renderDetail(place, distance) {
             <p class="details-desc">${descriptionText}</p>
         </div>
         <div class="details-sidebar">
+        <div class="info-box"><small>Användarbetyg</small><div>${starsHTML}</div></div>
             <div class="info-box"><small>Prisnivå</small><p>${priceText}</p></div>
             <div class="info-box"><small>Adress</small><p>${fullAddress}</p></div>
             <div class="info-box"><small>Avstånd</small><p>${distText}</p></div>

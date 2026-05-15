@@ -1,4 +1,4 @@
-import { fetchAllData } from "./api.js";
+import { fetchAllData, starRating } from "./api.js";
 
 let allPlaces = [];
 let currentFilter = "all";
@@ -20,7 +20,7 @@ async function init() {
     await loadData();
   }
 
-  
+
 }
 
 async function loadData(lat = null, lng = null) {
@@ -38,13 +38,18 @@ function renderCards(dataList) {
     article.classList.add("card");
     const mOrKm = place.distance < 1 ? `${Math.round(place.distance * 1000)} m` : `${place.distance} km`
     const distanceInfo = place.distance && place.distance !== 999 ? `<p><strong>${mOrKm}</strong> bort</p>` : "";
-    
+
     const categoryName = place.customCategory ? place.customCategory.charAt(0).toUpperCase() + place.customCategory.slice(1) : "Kultur";
+
+    const ratingValue = place.rating ? parseFloat(place.rating) : 0
+    const starsHTML = ratingValue > 0 ? `<div style="display:flex; align-items:center; gap:5px;">${starRating(ratingValue)} <span>${ratingValue}</span></div>`
+      : "Betyg saknas";
     article.innerHTML = `
             <img class="badge" src="./icons/${place.customCategory || "default"}.svg" alt="">
             <h2>${place.name} ID:${place.id}</h2>
             <p>${place.abstract || place.description || 'Ingen beskrivning tillgänglig'}</p>
             ${distanceInfo}
+            <div class="card-rating">${starsHTML}</div>
             <div class="card-footer">
                 <strong>Kategori:</strong> ${categoryName}
             </div>
@@ -55,7 +60,7 @@ function renderCards(dataList) {
     });
     container.appendChild(article);
   });
-  
+
 }
 
 function setupFilters() {
