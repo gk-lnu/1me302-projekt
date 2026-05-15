@@ -50,13 +50,15 @@ function renderDetail(place, distance) {
   const categoryName = place.type || place.description || "Kultur";
 
   const ratingValue = place.rating ? parseFloat(place.rating) : 0
-  const starsHTML = ratingValue > 0 ? `<div style="display:flex; align-items:center; gap:5px;">${starRating(ratingValue)} <span>${ratingValue}</span></div>`
+  const starsHTML = ratingValue > 0 ? `<div class="star"style="display:flex; align-items:center; gap:5px;">${starRating(ratingValue)} <span>${ratingValue}</span></div>`
     : "Betyg saknas";
+    const imageHTML = `./images/${place.id}.jpg`
 
 
 
   container.innerHTML = `
         <div class="details-content">
+        <img src="${imageHTML}">
              <h1 class="details-title">${place.name}</h1>
             <p class="details-subtitle">Kategori: ${categoryName.toUpperCase()} &middot; ${place.city || ""}</p>
             <p class="details-desc">${descriptionText}</p>

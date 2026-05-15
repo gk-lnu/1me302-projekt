@@ -218,6 +218,10 @@ footer {
     display: block;
 }
 
+.star {
+  width: 50%;
+}
+
 
 @media (max-width: 768px) {
   #detail-container {

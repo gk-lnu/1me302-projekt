@@ -42,7 +42,7 @@ function renderCards(dataList) {
     const categoryName = place.customCategory ? place.customCategory.charAt(0).toUpperCase() + place.customCategory.slice(1) : "Kultur";
 
     const ratingValue = place.rating ? parseFloat(place.rating) : 0
-    const starsHTML = ratingValue > 0 ? `<div style="display:flex; align-items:center; gap:5px;">${starRating(ratingValue)} <span>${ratingValue}</span></div>`
+    const starsHTML = ratingValue > 0 ? `<div class="star"style="display:flex; align-items:center; gap:5px;">${starRating(ratingValue)} <span>${ratingValue}</span></div>`
       : "Betyg saknas";
       const imageHTML = `./images/${place.id}.jpg`
     article.innerHTML = `
