@@ -211,6 +211,12 @@ footer {
   height: 250px;
 }
 
+.card-main-img {
+    width: 70%;
+    height: 70%;
+    object-fit: cover;
+    display: block;
+}
 
 
 @media (max-width: 768px) {

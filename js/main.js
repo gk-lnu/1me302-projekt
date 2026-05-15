@@ -44,7 +44,9 @@ function renderCards(dataList) {
     const ratingValue = place.rating ? parseFloat(place.rating) : 0
     const starsHTML = ratingValue > 0 ? `<div style="display:flex; align-items:center; gap:5px;">${starRating(ratingValue)} <span>${ratingValue}</span></div>`
       : "Betyg saknas";
+      const imageHTML = `./images/${place.id}.jpeg`
     article.innerHTML = `
+    <img class="card-main-img" src="${imageHTML}"  alt="${place.name}"
             <img class="badge" src="./icons/${place.customCategory || "default"}.svg" alt="">
             <h2>${place.name} ID:${place.id}</h2>
             <p>${place.abstract || place.description || 'Ingen beskrivning tillgänglig'}</p>
