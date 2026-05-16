@@ -16,11 +16,12 @@ function calcDistance(lat1, lng1, lat2, lng2) {
 
 async function fetchController(controller, lat = null, lng = null) {
   let method = "getall";
-  let params = "";
+  let params = "&limit=9999";
   if (lat !== null && lng !== null) {
     method = "getfromlatlng";
-    params = `&lat=${lat}&lng=${lng}&radius=100`;
+    params = `&lat=${lat}&lng=${lng}&radius=1000&limit=9999`;
   }
+  
   const url = `https://smapi.lnu.se/api/?api_key=${apiKey}&controller=${controller}&method=${method}${params}`;
   try {
     const response = await fetch(url);
@@ -68,18 +69,25 @@ export async function fetchAllData(userLat = null, userLng = null) {
 }
 
 export async function fetchSingle(id) {
-  const url = `https://smapi.lnu.se/api/?api_key=${apiKey}&controller=establishment&method=getall&ids=${id}`;
+  const urlEstsablishment = `https://smapi.lnu.se/api/?api_key=${apiKey}&controller=establishment&method=getall&ids=${id}`;
+  const urlAttraction = `https://smapi.lnu.se/api/?api_key=${apiKey}&controller=attraction&method=getall&ids=${id}`;
+
   try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.payload && data.payload.length > 0 ? data.payload[0] : null;
+    let response = await fetch(urlEstsablishment);
+    let data = await response.json();
+    if (data.payload && data.payload.length > 0) return data.payload[0];
+
+    response = await fetch(urlAttraction);
+    data = await response.json();
+    if (data.payload && data.payload.length > 0) return data.payload[0];
+
+    return null;
   } catch (error) {
     return null;
   }
 }
 
 export function starRating(rating) {
-
   const starEmpty = `<svg class="star-svg" width="100%" height="100%" viewBox="0 0 1260 1203" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
     <g transform="matrix(1,0,0,1,10.416667,-680.583333)">
         <g transform="matrix(1,0,0,1,-138.944677,0)">
@@ -87,7 +95,7 @@ export function starRating(rating) {
         </g>
     </g>
 </svg>
-`
+`;
   const starHalf = `<svg class="star-svg" width="100%" height="100%" viewBox="0 0 1260 1203" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
     <g transform="matrix(1,0,0,1,-1123.965018,-496.58317)">
         <g>
@@ -100,7 +108,7 @@ export function starRating(rating) {
             </g>
         </g>
     </g>
-</svg>`
+</svg>`;
 
   const starFull = `<svg class="star-svg" width="100%" height="100%" viewBox="0 0 1260 1203" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
     <g transform="matrix(1,0,0,1,-2168.346703,-765.583333)">
@@ -109,18 +117,18 @@ export function starRating(rating) {
         </g>
     </g>
 </svg>
-`
+`;
 
-  let html = ""
+  let html = "";
 
   for (let i = 1; i <= 5; i++) {
     if (rating >= i) {
-      html += starFull
+      html += starFull;
     } else if (rating >= i - 0.5) {
-      html += starHalf
+      html += starHalf;
     } else {
-      html += starEmpty
+      html += starEmpty;
     }
   }
-  return html
+  return html;
 }
