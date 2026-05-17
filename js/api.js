@@ -21,7 +21,7 @@ async function fetchController(controller, lat = null, lng = null) {
     method = "getfromlatlng";
     params = `&lat=${lat}&lng=${lng}&radius=1000&limit=9999`;
   }
-  
+
   const url = `https://smapi.lnu.se/api/?api_key=${apiKey}&controller=${controller}&method=${method}${params}`;
   try {
     const response = await fetch(url);
@@ -41,6 +41,8 @@ export async function fetchAllData(userLat = null, userLng = null) {
   const allData = [...establishments, ...attractions];
   const keywords = ["museum", "slott", "kyrka"];
   const filteredData = allData.filter((place) => {
+
+    if (place.id === "660" || place.id === "517") return false
     const name = place.name ? place.name.toLowerCase() : "";
     const desc = place.description ? place.description.toLowerCase() : "";
     const matchKeyword = keywords.find(

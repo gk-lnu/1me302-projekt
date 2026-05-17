@@ -83,12 +83,11 @@ function renderDetail(place, distance) {
     }).setView([lat, lng], 14);
 
     L.tileLayer(
-      "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=06974496-1f7b-4063-87eb-cea816c1b2d3",
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}.png?api_key=06974496-1f7b-4063-87eb-cea816c1b2d3",
       {
         minZoom: 0,
         maxZoom: 20,
-        attribution:
-          '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
         ext: "png",
       },
     ).addTo(map);
