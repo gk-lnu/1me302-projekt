@@ -8,29 +8,58 @@
     <script src="./js/main.js" type="module"></script>
 </head> 
 <body>
-    <header>
-        <h1>KulturSmåland</h1>
-    </header>
+    <div class="topbar">
+        <div class="topbar-name">KulturSmåland</div>
+        <div class="topbar-sort">
+            <label for="sort-select">Sortera efter:</label>
+            <select id="sort-select">
+                <option value="distance-asc">Närmast först</option>
+                <option value="distance-desc">Längst bort först</option>
+                <option value="rating-desc">Högst betyg</option>
+                <option value="rating-asc">Lägst betyg</option>
+            </select>
+        </div>
+        <div class="topbar-search">
+            <input type="text" id="search-input" placeholder="Sök...">
+            <span class="search-icon">🔍</span>
+        </div>
+    </div>
 
-    <main>
-        <p>Välkommen!</p>
-<section id="filter-controls">
-    <button class="filter-btn" data-category="all">Visa alla</button>
-    <button class="filter-btn" data-category="museum">Museer</button>
-    <button class="filter-btn" data-category="kyrka">Kyrkor</button>
-    <button class="filter-btn" data-category="slott">Slott</button>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="filter-group">
+                <button class="filter-toggle" data-group="kategori">Kategori <span class="arrow">›</span></button>
+                <div class="filter-options" data-group="kategori">
+                    <button class="filter-btn" data-category="all">Visa alla</button>
+                    <button class="filter-btn" data-category="museum">Museer</button>
+                    <button class="filter-btn" data-category="kyrka">Kyrkor</button>
+                    <button class="filter-btn" data-category="slott">Slott</button>
+                </div>
+            </div>
 
-    <label for="sort-select">Sortera efter:</label>
-    <select id="sort-select">
-        <option value="distance-asc">Närmast först</option>
-        <option value="distance-desc">Längst bort först</option>
-        <option value="rating-desc">Högst betyg</option>
-        <option value="rating-asc">Lägst betyg</option>
-    </select>
-</section>
+            <div class="filter-group">
+                <button class="filter-toggle" data-group="lan">Län <span class="arrow">›</span></button>
+                <div class="filter-options" data-group="lan">
+                    <button class="filter-btn">Kronoberg</button>
+                    <button class="filter-btn">Kalmar</button>
+                    <button class="filter-btn">Jönköping</button>
+                </div>
+            </div>
 
-        <section id="cards"></section>
-    </main>
+            <div class="filter-group">
+                <button class="filter-toggle" data-group="avstand">Avstånd <span class="arrow">›</span></button>
+                <div class="filter-options" data-group="avstand">
+                    <button class="filter-btn">&lt; 5 km</button>
+                    <button class="filter-btn">&lt; 25 km</button>
+                    <button class="filter-btn">&lt; 50 km</button>
+                    <button class="filter-btn">Alla</button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <section id="cards"></section>
+        </main>    </div>
 
     <footer>
         <p>&copy; 2026 KulturSmåland</p>
