@@ -19,8 +19,6 @@ async function init() {
   } else {
     await loadData();
   }
-
-
 }
 
 async function loadData(lat = null, lng = null) {
@@ -36,33 +34,56 @@ function renderCards(dataList) {
   dataList.forEach((place) => {
     const article = document.createElement("article");
     article.classList.add("card");
-    const mOrKm = place.distance < 1 ? `${Math.round(place.distance * 1000)} m` : `${place.distance} km`
-    const distanceInfo = place.distance && place.distance !== 999 ? `<p><strong>${mOrKm}</strong> bort</p>` : "";
+    const mOrKm =
+      place.distance < 1
+        ? `${Math.round(place.distance * 1000)} m`
+        : `${place.distance} km`;
+    const distanceInfo =
+      place.distance && place.distance !== 999
+        ? `<p><strong>${mOrKm}</strong> bort</p>`
+        : "";
 
-    const categoryName = place.customCategory ? place.customCategory.charAt(0).toUpperCase() + place.customCategory.slice(1) : "Kultur";
-
-    const ratingValue = place.rating ? parseFloat(place.rating) : 0
-    const starsHTML = ratingValue > 0 ? `<div class="star"style="display:flex; align-items:center; gap:5px;">${starRating(ratingValue)} <span>${ratingValue}</span></div>`
-      : "Betyg saknas";
-      const imageHTML = `./images/${place.id}.jpg`
+    const categoryName = place.customCategory
+      ? place.customCategory.charAt(0).toUpperCase() +
+      place.customCategory.slice(1)
+      : "Kultur";
+    const ratingRaw = place.rating ? parseFloat(place.rating) : 0;
+    const ratingValue = Math.round(ratingRaw * 10) / 10
+    const starsHTML =
+      ratingValue > 0
+        ? `<div class="star"style="display:flex; align-items:center; gap:5px;">${starRating(ratingValue)} <span>${ratingValue}</span></div>`
+        : "Betyg saknas";
+    const imageHTML = `./images/${place.id}.jpg`;
     article.innerHTML = `
-    <img class="card-main-img" src="${imageHTML}"  alt="${place.name}"
-            <img class="badge" src="./icons/${place.customCategory || "default"}.svg" alt="">
-            <h2>${place.name} ID:${place.id}</h2>
-            <p>${place.abstract || place.description || 'Ingen beskrivning tillgänglig'}</p>
-            ${distanceInfo}
-            <div class="card-rating">${starsHTML}</div>
-            <div class="card-footer">
-                <strong>Kategori:</strong> ${categoryName}
-            </div>
+    <div class="card-image-wrapper">
+    <div class="card-badge">
+              <img src="./icons/${place.customCategory}.svg" alt="${categoryName}">
+          </div>
+          <img class="card-main-img" src="${imageHTML}" alt="${place.name}">
+          
+          
+      </div>
+      
+      <div class="card-content">
+          <h2>${place.name} (ID:${place.id})</h2>
+          <div class="card-rating">${starsHTML}</div>
+          <p>${place.abstract || place.description || "Ingen beskrivning tillgänglig"}</p>
+          ${distanceInfo}
+          
+          <div class="card-footer">
+              <strong>Kategori:</strong> ${categoryName}
+          </div>
+      </div>
         `;
     article.addEventListener("click", () => {
-      const distParam = place.distance && place.distance !== 999 ? `&distance=${place.distance}` : "";
+      const distParam =
+        place.distance && place.distance !== 999
+          ? `&distance=${place.distance}`
+          : "";
       window.location.href = `detail.html?id=${place.id}&controller=${place.originController}${distParam}`;
     });
     container.appendChild(article);
   });
-
 }
 
 function setupFilters() {
@@ -82,7 +103,10 @@ function setupSorting() {
 }
 
 function applyFilterAndSort() {
-  let listToRender = currentFilter === "all" ? [...allPlaces] : allPlaces.filter((place) => place.customCategory === currentFilter);
+  let listToRender =
+    currentFilter === "all"
+      ? [...allPlaces]
+      : allPlaces.filter((place) => place.customCategory === currentFilter);
   const sortSelect = document.getElementById("sort-select");
   const sortValue = sortSelect ? sortSelect.value : "distance-asc";
   listToRender.sort((a, b) => {
@@ -92,9 +116,19 @@ function applyFilterAndSort() {
       if (b.distance === 999) return -1;
       return b.distance - a.distance;
     }
-    if (sortValue === "name-asc") return a.name.localeCompare(b.name, 'sv');
-    if (sortValue === "name-desc") return b.name.localeCompare(a.name, 'sv');
+    if (sortValue === "rating-desc") {
+      const ratingA = a.rating ? parseFloat(a.rating) : 0
+      const ratingB = b.rating ? parseFloat(b.rating) : 0
+      return ratingB - ratingA;
+    }
+    if (sortValue === "rating-asc") {
+      const ratingA = a.rating ? parseFloat(a.rating) : 0
+      const ratingB = b.rating ? parseFloat(b.rating) : 0
+      return ratingA - ratingB;
+    }
+
     return 0;
+
   });
   renderCards(listToRender);
 }

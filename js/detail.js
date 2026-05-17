@@ -49,7 +49,8 @@ function renderDetail(place, distance) {
     "Ingen beskrivning tillgänglig.";
   const categoryName = place.type || place.description || "Kultur";
 
-  const ratingValue = place.rating ? parseFloat(place.rating) : 0
+  const ratingRaw = place.rating ? parseFloat(place.rating) : 0
+  const ratingValue = Math.round(ratingRaw * 10) / 10
   const starsHTML = ratingValue > 0 ? `<div class="star"style="display:flex; align-items:center; gap:5px;">${starRating(ratingValue)} <span>${ratingValue}</span></div>`
     : "Betyg saknas";
     const imageHTML = `./images/${place.id}.jpg`
