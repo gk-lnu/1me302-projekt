@@ -30,7 +30,7 @@ function renderDetail(place, distance) {
     distance && distance !== "null" && distance !== "999"
       ? mOrKm < 1
         ? `${Math.round(mOrKm * 1000)} meter från dig`
-        : `${mOrKm} km från dig`
+        : `${Math.round(mOrKm * 10) / 10} km från dig`
       : "Okänt avstånd";
   const fullAddress = place.address
     ? `${place.address}, ${place.zip_code || ""} ${place.city || ""}`

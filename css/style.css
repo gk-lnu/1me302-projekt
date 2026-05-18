@@ -361,6 +361,13 @@ footer {
     height: 35px;
 }
 
+.filter-options {
+  display: none;
+}
+.filter-options.open {
+  display: block;
+}
+
 
 @media (max-width: 768px) {
   #detail-container {

@@ -1,24 +1,15 @@
 const apiKey = "tsShv4yJ";
 
-function calcDistance(lat1, lng1, lat2, lng2) {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * (Math.PI / 180);
-  const dLng = (lng2 - lng1) * (Math.PI / 180);
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(lat1 * (Math.PI / 180)) *
-    Math.cos(lat2 * (Math.PI / 180)) *
-    Math.sin(dLng / 2) *
-    Math.sin(dLng / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
-}
+// Vi behöver inte calcDistance längre! SMAPI löser det åt oss.
 
 async function fetchController(controller, lat = null, lng = null) {
   let method = "getall";
   let params = "&limit=9999";
+  
+  // Om vi har koordinater byter vi metod precis som du läste i dokumentationen
   if (lat !== null && lng !== null) {
     method = "getfromlatlng";
+    // Radien sätts till 1000 km för att täcka hela Småland
     params = `&lat=${lat}&lng=${lng}&radius=1000&limit=9999`;
   }
 
@@ -29,60 +20,59 @@ async function fetchController(controller, lat = null, lng = null) {
     const payload = data.payload || [];
     return payload.map((item) => ({ ...item, originController: controller }));
   } catch (error) {
+    console.error(`Misslyckades att hämta från ${controller}:`, error);
     return [];
   }
 }
 
 export async function fetchAllData(userLat = null, userLng = null) {
-  const [establishments, attractions] = await Promise.all([
-    fetchController("establishment", userLat, userLng),
-    fetchController("attraction", userLat, userLng),
-  ]);
-  const allData = [...establishments, ...attractions];
+  // Vi hämtar från establishment så vi får kommunerna, 
+  // men API:et ger oss även "distance_in_km" när vi skickat med userLat/userLng!
+  const establishments = await fetchController("establishment", userLat, userLng);
+  
+  const allData = [...establishments];
   const keywords = ["museum", "slott", "kyrka"];
+  
   const filteredData = allData.filter((place) => {
-
-    if (place.id === "660" || place.id === "517") return false
+    if (place.id === "660" || place.id === "517") return false;
+    
     const name = place.name ? place.name.toLowerCase() : "";
     const desc = place.description ? place.description.toLowerCase() : "";
+    
     const matchKeyword = keywords.find(
       (keyword) => desc.includes(keyword) || name.includes(keyword),
     );
+    
     if (matchKeyword) {
       place.customCategory = matchKeyword;
-      if (userLat !== null && userLng !== null) {
-        const pLat = parseFloat(place.lat);
-        const pLng = parseFloat(place.lng);
-        if (!isNaN(pLat) && !isNaN(pLng)) {
-          place.distance = parseFloat(
-            calcDistance(userLat, userLng, pLat, pLng).toFixed(1),
-          );
-        } else {
-          place.distance = 999;
-        }
+      
+      // HÄR ÄR DIN LÖSNING: Vi läser av avståndet direkt från API:et!
+      if (place.distance_in_km !== undefined && place.distance_in_km !== null) {
+        // SMAPI ger oss avståndet i km. Vi sparar det i place.distance för att
+        // det ska matcha rullgardinens logik.
+        place.distance = parseFloat(place.distance_in_km);
+      } else {
+        // Fallback om användaren inte godkänt platstjänster
+        place.distance = 999; 
       }
+      
       return true;
     }
     return false;
   });
+  
   return Array.from(
     new Map(filteredData.map((item) => [item.name, item])).values(),
   );
 }
 
 export async function fetchSingle(id) {
-  const urlEstsablishment = `https://smapi.lnu.se/api/?api_key=${apiKey}&controller=establishment&method=getall&ids=${id}`;
-  const urlAttraction = `https://smapi.lnu.se/api/?api_key=${apiKey}&controller=attraction&method=getall&ids=${id}`;
+  const urlEstablishment = `https://smapi.lnu.se/api/?api_key=${apiKey}&controller=establishment&method=getall&ids=${id}`;
 
   try {
-    let response = await fetch(urlEstsablishment);
+    let response = await fetch(urlEstablishment);
     let data = await response.json();
     if (data.payload && data.payload.length > 0) return data.payload[0];
-
-    response = await fetch(urlAttraction);
-    data = await response.json();
-    if (data.payload && data.payload.length > 0) return data.payload[0];
-
     return null;
   } catch (error) {
     return null;
@@ -96,8 +86,7 @@ export function starRating(rating) {
             <path d="M723.158,715.651C728.61,700.841 742.718,691 758.5,691C774.282,691 788.39,700.841 793.842,715.651L923.226,1067.174C926.595,1076.327 932.605,1084.273 940.495,1090.005C948.385,1095.738 957.8,1098.998 967.545,1099.374L1341.845,1113.799C1357.616,1114.407 1371.334,1124.784 1376.211,1139.793C1381.088,1154.803 1376.089,1171.262 1363.688,1181.023L1069.351,1412.701C1061.688,1418.734 1055.988,1426.905 1052.974,1436.181C1049.961,1445.456 1049.769,1455.417 1052.423,1464.802L1154.369,1825.24C1158.664,1840.426 1153.035,1856.68 1140.267,1865.957C1127.499,1875.233 1110.301,1875.564 1097.185,1866.786L785.891,1658.449C777.786,1653.024 768.253,1650.129 758.5,1650.129C748.747,1650.129 739.214,1653.024 731.109,1658.449L419.815,1866.786C406.699,1875.564 389.501,1875.233 376.733,1865.957C363.965,1856.68 358.336,1840.426 362.631,1825.24L464.577,1464.802C467.231,1455.417 467.039,1445.456 464.026,1436.181C461.012,1426.905 455.312,1418.734 447.649,1412.701L153.312,1181.023C140.911,1171.262 135.912,1154.803 140.789,1139.793C145.666,1124.784 159.384,1114.407 175.155,1113.799L549.455,1099.374C559.2,1098.998 568.615,1095.738 576.505,1090.005C584.395,1084.273 590.405,1076.327 593.774,1067.174L723.158,715.651Z" style="fill:rgb(255,233,151);stroke:rgb(8,6,5);stroke-width:20.83px;"/>
         </g>
     </g>
-</svg>
-`;
+</svg>`;
   const starHalf = `<svg class="star-svg" width="100%" height="100%" viewBox="0 0 1260 1203" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
     <g transform="matrix(1,0,0,1,-1123.965018,-496.58317)">
         <g>
