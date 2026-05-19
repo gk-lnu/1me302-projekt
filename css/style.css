@@ -141,7 +141,8 @@ body {
     padding: 12px 0 12px 8px;
 }
 
-.filter-options.expanded {
+.filter-options.expanded,
+.filter-options.open {
     display: flex;
 }
 
