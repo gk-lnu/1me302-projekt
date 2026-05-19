@@ -52,15 +52,19 @@ body {
 }
 
 #sort-select {
-    border: none;
-    background: transparent;
+    border: 1px solid #1a1a1a;
+    background: #fff8eb;
     font-family: 'Crimson Pro', serif;
     font-size: 16px;
     font-style: italic;
     cursor: pointer;
-    border-bottom: 1px solid #1a1a1a;
     color: #1a1a1a;
-    padding: 2px 6px;
+    padding: 6px 12px;
+    transition: background 0.15s;
+}
+
+#sort-select:hover {
+    background: #ebe5d4;
 }
 
 .topbar-search {
@@ -104,7 +108,7 @@ body {
 
 .filter-toggle {
     width: 100%;
-    padding: 16px 0;
+    padding: 16px 12px;
     border: none;
     border-bottom: 1px solid #d8d3c4;
     background: transparent;
@@ -117,9 +121,11 @@ body {
     justify-content: space-between;
     align-items: center;
     text-align: left;
+    transition: background 0.15s;
 }
 
 .filter-toggle:hover {
+    background: #ebe5d4;
     color: #a85c2c;
 }
 
@@ -147,35 +153,43 @@ body {
 }
 
 .filter-btn {
-    padding: 6px 12px;
-    border: none;
-    background: transparent;
-    color: #555;
+    padding: 8px 14px;
+    border: 1px solid #d8d3c4;
+    background: #fff8eb;
+    color: #1a1a1a;
     font-family: 'Crimson Pro', serif;
     font-size: 15px;
     cursor: pointer;
     text-align: left;
     border-radius: 3px;
+    transition: all 0.15s;
 }
 
 .filter-btn:hover {
-    background: #ebe5d4;
-    color: #1a1a1a;
+    background: #1a1a1a;
+    color: #f7f4ed;
+    border-color: #1a1a1a;
 }
 
 #cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 40px 32px;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 32px;
     margin-top: 8px;
 }
 
 .card {
-    background: transparent;
-    border: none;
-    padding: 0 0 24px 0;
-    border-bottom: 1px solid #d8d3c4;
+    background: #fff8eb;
+    border: 1px solid #d8d3c4;
+    padding: 0 0 16px 0;
     cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.card:hover {
+    border-color: #1a1a1a;
+    transform: translateY(-2px);
 }
 
 .card img,
@@ -192,21 +206,31 @@ body {
 .card h2 {
     font-family: 'Playfair Display', serif;
     font-weight: 600;
-    font-size: 26px;
+    font-size: 24px;
     line-height: 1.1;
     margin: 6px 0 8px 0;
     color: #1a1a1a;
+    padding: 0 16px;
 }
 
 .card p {
     font-size: 15px;
     color: #555;
     margin-bottom: 6px;
+    padding: 0 16px;
+}
+
+.card:hover h2 {
+    color: #a85c2c;
+}
+
+.card-rating {
+    padding: 0 16px;
 }
 
 .card-footer {
     margin-top: 12px;
-    padding-top: 0;
+    padding: 0 16px;
     border-top: none;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -231,7 +255,7 @@ footer {
 }
 
 .details-main {
-    max-width: 1100px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 40px 32px;
     font-family: 'Crimson Pro', serif;
@@ -255,8 +279,8 @@ footer {
 
 #detail-container {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 40px;
+    grid-template-columns: 3fr 1fr;
+    gap: 56px;
     align-items: start;
 }
 
@@ -266,10 +290,10 @@ footer {
 
 .details-img {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: 70vh;
     object-fit: cover;
     filter: saturate(0.85) sepia(0.05);
-    margin-bottom: 24px;
+    margin-bottom: 40px;
     display: block;
 }
 
@@ -354,8 +378,8 @@ footer {
 .info-box.map-box {
     padding: 0 !important;
     border: 1px solid #d8d3c4;
-    height: 250px !important;
-    min-height: 250px;
+    height: 320px !important;
+    min-height: 320px;
     overflow: hidden;
     margin-top: 12px;
     display: block;
