@@ -467,6 +467,23 @@ footer {
     margin-left: 6px;
 }
 
+#municipality-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d8d3c4;
+    background: transparent;
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    color: #1a1a1a;
+    cursor: pointer;
+    border-radius: 0;
+}
+
+#municipality-select:focus {
+    outline: none;
+    border-color: #a85c2c;
+}
+
 @media (max-width: 768px) {
     .topbar {
         grid-template-columns: 1fr;
