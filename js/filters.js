@@ -11,19 +11,23 @@ export function Dropdown(places) {
 
   select.innerHTML = '<option value="all">Alla kommuner</option>';
   
-  // ENBART place.municipality, tar bort alla "undefined" eller tomma fält med filter(Boolean)
+ 
   const municipalities = places.map(place => place.municipality).filter(Boolean);
   const uniqueAreas = [...new Set(municipalities)].sort();
 
   uniqueAreas.forEach(area => {
     const option = document.createElement("option");
     
-    // Vi sparar originalnamnet för exakt matchning i filtret
+    
     option.value = area; 
     
-    // Städar upp namnet i rullgardinen så att det ser bra ut
-    let cleanName = area.replace(/ kommun| län/gi, "").trim();
+    
+    let cleanName = area.replace(/ kommun| län|s kommun|/gi, "").trim();
     cleanName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+
+   if (area === "Tranås kommun") {
+        cleanName = "Tranås";
+    }
     
     option.textContent = cleanName; 
     select.appendChild(option);
@@ -31,6 +35,7 @@ export function Dropdown(places) {
 }
 
 export function FilterSort(allPlaces, renderCallback) {
+
   document.querySelectorAll('.filter-toggle').forEach(btn => {
     const newBtn = btn.cloneNode(true);
     btn.parentNode.replaceChild(newBtn, btn);
@@ -44,11 +49,64 @@ export function FilterSort(allPlaces, renderCallback) {
     });
   });
 
+  
+  const renderActiveChips = () => {
+    const container = document.getElementById("active-chips");
+    if (!container) return;
+    container.innerHTML = "";
+
+    
+    const createChip = (text, onRemove) => {
+      const btn = document.createElement("button");
+      btn.className = "chip";
+      btn.innerHTML = `${text} <span class="chip-close">X</span>`;
+      btn.addEventListener("click", onRemove);
+      return btn;
+    };
+
+    
+    if (currentFilters.category !== "all") {
+      const catName = currentFilters.category.charAt(0).toUpperCase() + currentFilters.category.slice(1);
+      container.appendChild(createChip(catName, () => {
+        currentFilters.category = "all";
+        
+        document.querySelectorAll('.filter-options[data-group="kategori"] .filter-btn').forEach(b => b.classList.remove("active"));
+        triggerUpdate();
+      }));
+    }
+
+   
+    if (currentFilters.area !== "all") {
+      let cleanName = currentFilters.area.replace(/ kommun| län/gi, "").trim();
+      cleanName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+      
+      container.appendChild(createChip(cleanName, () => {
+        currentFilters.area = "all";
+        
+        document.getElementById("municipality-select").value = "all";
+        triggerUpdate();
+      }));
+    }
+
+   
+    if (currentFilters.distance !== "all") {
+      container.appendChild(createChip(`Max ${currentFilters.distance} km`, () => {
+        currentFilters.distance = "all";
+      
+        document.querySelectorAll('.filter-options[data-group="avstand"] .filter-btn').forEach(b => b.classList.remove("active"));
+        triggerUpdate();
+      }));
+    }
+  };
+
+ 
   const triggerUpdate = () => {
+    renderActiveChips(); 
     const result = applyFilterAndSort(allPlaces);
     renderCallback(result);
   };
 
+ 
   const searchInput = document.getElementById("search-input");
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
@@ -96,7 +154,7 @@ export function FilterSort(allPlaces, renderCallback) {
     sortSelect.addEventListener("change", triggerUpdate);
   }
   
-  // Ritar ut skärmen första gången vi laddar datan
+  
   triggerUpdate();
 }
 
@@ -104,7 +162,7 @@ function applyFilterAndSort(allPlaces) {
   return allPlaces.filter((place) => {
     if (currentFilters.category !== "all" && place.customCategory !== currentFilters.category) return false;
     
-    // KOMMUN-FILTER: Matchar ENBART mot place.municipality
+    
     if (currentFilters.area !== "all" && place.municipality !== currentFilters.area) return false;
     
     if (currentFilters.distance !== "all") {

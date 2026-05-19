@@ -1,15 +1,15 @@
 const apiKey = "tsShv4yJ";
 
-// Vi behöver inte calcDistance längre! SMAPI löser det åt oss.
+
 
 async function fetchController(controller, lat = null, lng = null) {
   let method = "getall";
   let params = "&limit=9999";
   
-  // Om vi har koordinater byter vi metod precis som du läste i dokumentationen
+  
   if (lat !== null && lng !== null) {
     method = "getfromlatlng";
-    // Radien sätts till 1000 km för att täcka hela Småland
+    
     params = `&lat=${lat}&lng=${lng}&radius=1000&limit=9999`;
   }
 
@@ -26,15 +26,14 @@ async function fetchController(controller, lat = null, lng = null) {
 }
 
 export async function fetchAllData(userLat = null, userLng = null) {
-  // Vi hämtar från establishment så vi får kommunerna, 
-  // men API:et ger oss även "distance_in_km" när vi skickat med userLat/userLng!
+  
   const establishments = await fetchController("establishment", userLat, userLng);
   
   const allData = [...establishments];
   const keywords = ["museum", "slott", "kyrka"];
   
   const filteredData = allData.filter((place) => {
-    if (place.id === "660" || place.id === "517") return false;
+    if (place.id === "660" || place.id === "517" || place.id === "163") return false;
     
     const name = place.name ? place.name.toLowerCase() : "";
     const desc = place.description ? place.description.toLowerCase() : "";
@@ -46,13 +45,12 @@ export async function fetchAllData(userLat = null, userLng = null) {
     if (matchKeyword) {
       place.customCategory = matchKeyword;
       
-      // HÄR ÄR DIN LÖSNING: Vi läser av avståndet direkt från API:et!
+    
       if (place.distance_in_km !== undefined && place.distance_in_km !== null) {
-        // SMAPI ger oss avståndet i km. Vi sparar det i place.distance för att
-        // det ska matcha rullgardinens logik.
+        
         place.distance = parseFloat(place.distance_in_km);
       } else {
-        // Fallback om användaren inte godkänt platstjänster
+      
         place.distance = 999; 
       }
       

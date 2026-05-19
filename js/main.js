@@ -25,10 +25,10 @@ async function init() {
 async function loadData(lat = null, lng = null) {
   allPlaces = await fetchAllData(lat, lng);
   
-  // HÄR ÄR MAGIN: Nu anropar vi faktiskt Dropdown så att menyn skapas!
+ 
   Dropdown(allPlaces);
   
-  // Vi startar igång filterlogiken och ber den rita ut korten
+  
   FilterSort(allPlaces, renderCards);
 }
 
@@ -54,7 +54,7 @@ function renderCards(dataList) {
       ? `<p><strong>${mOrKm}</strong> bort</p>` 
       : "";
 
-    // Vi skriver ut exakt det som finns i municipality!
+   
     const cityDisplay = place.municipality || "Okänd kommun";
     
     const categoryName = place.customCategory 
