@@ -351,12 +351,19 @@ footer {
     text-decoration: underline;
 }
 
-.map-box {
-    padding: 0;
+.info-box.map-box {
+    padding: 0 !important;
     border: 1px solid #d8d3c4;
-    height: 250px;
+    height: 250px !important;
+    min-height: 250px;
     overflow: hidden;
     margin-top: 12px;
+    display: block;
+}
+
+.info-box.map-box .leaflet-container {
+    height: 100%;
+    width: 100%;
 }
 
 #map {
