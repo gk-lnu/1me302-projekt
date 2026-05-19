@@ -76,7 +76,7 @@ function renderCards(dataList) {
     </div>
       
     <div class="card-content">
-        <h2>${place.name} (ID:${place.id})</h2>
+        <h2>${place.name}</h2>
         <div class="card-rating">${starsHTML}</div>
         
         <p>${cityDisplay}</p>

@@ -35,7 +35,17 @@ function renderDetail(place, distance) {
   const fullAddress = place.address
     ? `${place.address}, ${place.zip_code || ""} ${place.city || ""}`
     : "Adress saknas";
-  const priceText = place.price_range || "Information saknas";
+  let priceText = place.price_range || "Information saknas";
+
+  if (priceText === "0" || priceText === "0-25") {
+    priceText = "Gratis";
+  } else if (priceText.includes("-")) {
+    const maxPrice = priceText.split("-")[1];
+    priceText = `Upp till ${maxPrice} kr`;
+  } else if (priceText !== "Information saknas") {
+
+    priceText = `${priceText} kr`;
+  }
   const webHTML = place.website
     ? `<div class="info-box"><small>Webbplats</small><p><a href="${place.website}" target="_blank">Besök hemsida</a></p></div>`
     : "";
@@ -47,13 +57,13 @@ function renderDetail(place, distance) {
     place.abstract ||
     place.description ||
     "Ingen beskrivning tillgänglig.";
-  const categoryName = place.type || place.description || "Kultur";
+  const categoryName =  place.description || "Kultur";
 
   const ratingRaw = place.rating ? parseFloat(place.rating) : 0
   const ratingValue = Math.round(ratingRaw * 10) / 10
   const starsHTML = ratingValue > 0 ? `<div class="star"style="display:flex; align-items:center; gap:5px;">${starRating(ratingValue)} <span>${ratingValue}</span></div>`
     : "Betyg saknas";
-    const imageHTML = `./images/${place.id}.jpg`
+  const imageHTML = `./images/${place.id}.jpg`
 
 
 
@@ -61,7 +71,7 @@ function renderDetail(place, distance) {
         <div class="details-content">
         <img class="details-img" src="${imageHTML}">
              <h1 class="details-title">${place.name}</h1>
-            <p class="details-subtitle">Kategori: ${categoryName.toUpperCase()} &middot; ${place.city || ""}</p>
+            <p class="details-subtitle">Kategori: ${categoryName} &middot; Stad: ${place.city || ""}</p>
             <p class="details-desc">${descriptionText}</p>
         </div>
         <div class="details-sidebar">
