@@ -30,23 +30,20 @@
 
     <div class="layout">
         <aside class="sidebar">
+            
             <div class="filter-group">
                 <button class="filter-toggle" data-group="kategori">Kategori <span class="arrow">›</span></button>
-                <div class="filter-options" data-group="kategori">
-                    <button class="filter-btn" data-category="all">Visa alla</button>
-                    <button class="filter-btn" data-category="museum">Museer</button>
-                    <button class="filter-btn" data-category="kyrka">Kyrkor</button>
-                    <button class="filter-btn" data-category="slott">Slott</button>
+                <div class="filter-options" data-group="kategori" id="category-checkboxes">
+                    <label class="checkbox-label"><input type="checkbox" value="museum" class="category-checkbox"> Museum</label>
+                    <label class="checkbox-label"><input type="checkbox" value="slott" class="category-checkbox"> Slott</label>
+                    <label class="checkbox-label"><input type="checkbox" value="kyrka" class="category-checkbox"> Kyrka</label>
                 </div>
             </div>
 
             <div class="filter-group">
-                <button class="filter-toggle" data-group="lan">Kommun <span class="arrow">›</span></button>
-                <div class="filter-options open" data-group="lan">
-                    <select id="municipality-select">
-                        <option value="all">Alla kommuner</option>
-                    </select>
-                </div>
+                <button class="filter-toggle" data-group="omrade">Kommun <span class="arrow">›</span></button>
+                <div class="filter-options" data-group="omrade" id="municipality-checkboxes">
+                    </div>
             </div>
 
             <div class="filter-group">
@@ -57,13 +54,12 @@
                     <button class="filter-btn">&lt; 50 km</button>
                     <button class="filter-btn">Alla</button>
                 </div>
-                    <div id="active-chips" class="chip-container"></div>
             </div>
-
 
         </aside>
 
         <main class="content">
+            <div id="active-chips" class="chip-container"></div>
             <section id="cards"></section>
         </main>
     </div>

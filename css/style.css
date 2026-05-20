@@ -498,21 +498,104 @@ footer {
     margin-left: 6px;
 }
 
-#municipality-select {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #d8d3c4;
-    background: transparent;
-    font-family: 'Crimson Pro', serif;
-    font-size: 15px;
-    color: #1a1a1a;
-    cursor: pointer;
-    border-radius: 0;
+
+
+#municipality-checkboxes {
+    max-height: 180px;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-top: 5px;
 }
 
-#municipality-select:focus {
-    outline: none;
-    border-color: #a85c2c;
+
+#municipality-checkboxes::-webkit-scrollbar {
+    width: 6px;
+}
+
+#municipality-checkboxes::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 4px;
+}
+
+#municipality-checkboxes::-webkit-scrollbar-thumb:hover {
+    background-color: #94a3b8;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #475569;
+    transition: all 0.2s ease;
+}
+
+.checkbox-label:hover {
+    background-color: #f1f5f9;
+    color: #1e293b;
+}
+
+.checkbox-label:has(input:checked) {
+    background-color: #e2e8f0;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.checkbox-label input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #cbd5e1;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-right: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.checkbox-label input[type="checkbox"]:checked {
+    background-color: #2c3e50;
+    border-color: #2c3e50;
+}
+
+.checkbox-label input[type="checkbox"]::before {
+    content: "";
+    width: 10px;
+    height: 5px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) scale(0);
+    transition: transform 0.1s ease-in-out;
+    margin-top: -3px;
+}
+
+.checkbox-label input[type="checkbox"]:checked::before {
+    transform: rotate(-45deg) scale(1);
+}
+
+.clear-all-chips-btn {
+    background-color: #fff;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    border-radius: 8px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.clear-all-chips-btn:hover {
+    background-color: #ef4444;
+    color: #fff;
 }
 
 @media (max-width: 768px) {
