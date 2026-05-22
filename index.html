@@ -46,13 +46,21 @@
                     </div>
             </div>
 
-            <div class="filter-group">
+         <div class="filter-group">
                 <button class="filter-toggle" data-group="avstand">Avstånd <span class="arrow">›</span></button>
                 <div class="filter-options" data-group="avstand">
-                    <button class="filter-btn">&lt; 5 km</button>
-                    <button class="filter-btn">&lt; 25 km</button>
-                    <button class="filter-btn">&lt; 50 km</button>
-                    <button class="filter-btn">Alla</button>
+                    <label class="checkbox-label">
+                        <input type="radio" name="distance" class="distance-radio" value="5"> &lt; 5 km
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="radio" name="distance" class="distance-radio" value="25"> &lt; 25 km
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="radio" name="distance" class="distance-radio" value="50"> &lt; 50 km
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="radio" name="distance" class="distance-radio" value="all" checked> Alla
+                    </label>
                 </div>
             </div>
 

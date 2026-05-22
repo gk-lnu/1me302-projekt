@@ -84,19 +84,12 @@ export function FilterSort(allPlaces, renderCallback) {
     });
   }
 
-  document.querySelectorAll('.filter-options[data-group="avstand"] .filter-btn').forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      document.querySelectorAll('.filter-options[data-group="avstand"] .filter-btn').forEach(b => b.classList.remove("active"));
-      const targetBtn = e.currentTarget;
-      targetBtn.classList.add("active");
-      
-      const text = targetBtn.textContent;
-      if (text.includes("5")) currentFilters.distance = "5";
-      else if (text.includes("25")) currentFilters.distance = "25";
-      else if (text.includes("50")) currentFilters.distance = "50";
-      else currentFilters.distance = "all";
-      
-      triggerUpdate();
+  document.querySelectorAll('.distance-radio').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        currentFilters.distance = e.target.value;
+        triggerUpdate();
+      }
     });
   });
 
@@ -146,7 +139,8 @@ function renderActiveChips(updateCallback) {
   if (currentFilters.distance !== "all") {
     container.appendChild(createChip(`Max ${currentFilters.distance} km`, () => {
       currentFilters.distance = "all";
-      document.querySelectorAll('.filter-options[data-group="avstand"] .filter-btn').forEach(b => b.classList.remove("active"));
+      const allRadio = document.querySelector('.distance-radio[value="all"]');
+      if (allRadio) allRadio.checked = true;
       updateCallback();
     }));
   }
@@ -165,7 +159,8 @@ function renderActiveChips(updateCallback) {
       if (input) input.value = "";
       
       document.querySelectorAll('.category-checkbox, .area-checkbox').forEach(cb => cb.checked = false);
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove("active"));
+      const allRadio = document.querySelector('.distance-radio[value="all"]');
+      if (allRadio) allRadio.checked = true;
       
       updateCallback();
     });
@@ -184,7 +179,7 @@ function applyFilterAndSort(allPlaces) {
     }
     
     if (currentFilters.distance !== "all") {
-      const maxDist = parseInt(currentFilters.distance);
+      const maxDist = parseInt(currentFilters.distance, 10);
       if (place.distance > maxDist) return false;
     }
     
