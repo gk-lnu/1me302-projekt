@@ -61,6 +61,7 @@ body {
     color: #1a1a1a;
     padding: 6px 12px;
     transition: background 0.15s;
+    border-radius: 8px;
 }
 
 #sort-select:hover {
@@ -185,6 +186,7 @@ body {
     cursor: pointer;
     overflow: hidden;
     transition: border-color 0.2s, transform 0.2s;
+    border-radius: 8px;
 }
 
 .card:hover {
@@ -271,10 +273,16 @@ footer {
     font-family: 'JetBrains Mono', monospace;
     letter-spacing: 2px;
     text-transform: uppercase;
+    border: 1px solid #d8d3c4;
+    padding: 6px 12px;
+    transition: all 0.15s;
+    border-radius: 8px;
 }
 
 #back-link:hover {
     color: #a85c2c;
+    scale: 1.05;
+    
 }
 
 #detail-container {
@@ -295,6 +303,7 @@ footer {
     filter: saturate(0.85) sepia(0.05);
     margin-bottom: 40px;
     display: block;
+    border-radius: 8px;
 }
 
 .image-placeholder {
@@ -610,6 +619,78 @@ footer {
     display: none;
 }
 
+.share-btn svg {
+    width: 25px;
+    height: 25px;
+    transition: fill 0.2s ease;
+}
+
+.share-btn {
+    position: relative;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+    border: 1px solid #d8d3c4;
+    padding: 6px;
+    border-radius: 8px;
+    gap: 4px;
+}
+
+.share-btn:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1a1a1a;
+    color: #f7f4ed;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    font-family: 'Crimson Pro', serif;
+    z-index: 1001;
+    pointer-events: none;
+    animation: tooltipFadeIn 0.2s ease;
+    
+}
+
+.share-btn:hover::before {
+    content: "";
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-bottom-color: #1a1a1a;
+    z-index: 1001;
+    pointer-events: none;
+    animation: tooltipFadeIn 0.2s ease;
+   
+}
+
+.share-btn:hover {
+scale: 1.05;
+color: #a85c2c;
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+
 @media (max-width: 768px) {
     .topbar {
         grid-template-columns: auto 1fr 1fr;
@@ -646,7 +727,10 @@ footer {
     #sort-select {
         font-size: 12px;
         padding: 3px 6px;
+        
     }
+
+    
 
     .topbar-search input {
         font-size: 12px;
