@@ -28,6 +28,10 @@
         </div>
     </div>
 
+    <div class="mobile-menu-row">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Öppna meny">☰</button>
+    </div>
+
     <div class="layout">
         <aside class="sidebar">
             
@@ -75,6 +79,22 @@
     <footer>
         <p>&copy; 2026 KulturSmåland</p>
     </footer>
+
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('open');
+        }
+
+        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+        if (overlay) overlay.addEventListener('click', toggleMenu);
+    </script>
 </body>
 
 </html>
