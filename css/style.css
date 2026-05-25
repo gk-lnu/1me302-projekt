@@ -29,7 +29,7 @@ body {
     border-right: 0;
 }
 
-.topbar-name {
+.topbar-name h1 {
     font-family: 'Playfair Display', serif;
     font-weight: 900;
     font-size: 24px;
@@ -38,17 +38,30 @@ body {
     flex-direction: column;
     align-items: flex-start;
     line-height: 0.9;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.topbar-name-detail h1 {
+   font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 40px;
+    letter-spacing: -1px;
+    color: #1a1a1a;
+    text-align: center;
+    border-bottom: 1px solid #1a1a1a;
+    padding: 8px;
 }
 
 .topbar-sort {
     gap: 12px;
     font-size: 14px;
-    color: #555;
+    color: #1a1a1a;
 }
 
 .topbar-sort label {
-  
-    color: #888;
+  font-size: 14px;
+    color: #1a1a1a;
 }
 
 #sort-select {
@@ -70,7 +83,7 @@ body {
 
 .topbar-search {
     gap: 12px;
-    color: #888;
+    color: #1a1a1a;
 }
 
 .topbar-search input {
@@ -83,8 +96,15 @@ body {
     flex: 1;
 }
 
+.topbar-search input::placeholder {
+    color: #626262;
+    
+}
+
 .search-icon {
-    font-size: 1.1rem;
+    width: 25px;
+    height: 25px;
+    
 }
 
 .layout {
@@ -133,7 +153,7 @@ body {
 .filter-toggle .arrow {
     font-family: 'Crimson Pro', serif;
     font-size: 18px;
-    color: #999;
+    color: #1a1a1a;
     transition: transform 0.2s;
 }
 
@@ -217,7 +237,7 @@ body {
 
 .card p {
     font-size: 15px;
-    color: #555;
+    color: #1a1a1a;
     margin-bottom: 6px;
     padding: 0 16px;
 }
@@ -238,7 +258,7 @@ body {
     font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #888;
+    color: #1a1a1a;
 }
 
 .card-rating {
@@ -273,7 +293,7 @@ footer {
     font-family: 'JetBrains Mono', monospace;
     letter-spacing: 2px;
     text-transform: uppercase;
-    border: 1px solid #d8d3c4;
+    border: 1px solid #1a1a1a;
     padding: 6px 12px;
     transition: all 0.15s;
     border-radius: 8px;
@@ -314,7 +334,7 @@ footer {
     align-items: center;
     justify-content: center;
     margin-bottom: 24px;
-    color: #888;
+    color: #1a1a1a;
     font-size: 14px;
 }
 
@@ -332,7 +352,7 @@ footer {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     letter-spacing: 3px;
-    color: #888;
+    color: #1a1a1a;
     margin: 0 0 32px 0;
     text-transform: uppercase;
 }
@@ -362,7 +382,7 @@ footer {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     letter-spacing: 3px;
-    color: #888;
+    color: #1a1a1a;
     text-transform: uppercase;
     margin-bottom: 6px;
 }
@@ -538,7 +558,7 @@ footer {
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.95rem;
-    color: #475569;
+    color: #1a1a1a;
     transition: all 0.2s ease;
 }
 

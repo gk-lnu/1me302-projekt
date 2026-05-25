@@ -11,30 +11,33 @@
 </head>
 
 <body>
-    <div class="topbar">
-        <div class="topbar-name">KulturSmåland</div>
-        <div class="topbar-sort">
-            <label for="sort-select">Sortera efter:</label>
-            <select id="sort-select">
-                <option value="distance-asc">Närmast först</option>
-                <option value="distance-desc">Längst bort först</option>
-                <option value="rating-desc">Högst betyg</option>
-                <option value="rating-asc">Lägst betyg</option>
-            </select>
-        </div>
-        <div class="topbar-search">
-            <input type="text" id="search-input" placeholder="Sök (t.ex Kalmar slott)...">
-            <span class="search-icon">🔍</span>
-        </div>
-    </div>
 
+    <header>
+        <div class="topbar">
+            <div class="topbar-name"><h1>KulturSmåland</h1></div>
+            <div class="topbar-sort">
+                <label for="sort-select">Sortera efter:</label>
+                <select id="sort-select">
+                    <option value="distance-asc">Närmast först</option>
+                    <option value="distance-desc">Längst bort först</option>
+                    <option value="rating-desc">Högst betyg</option>
+                    <option value="rating-asc">Lägst betyg</option>
+                </select>
+            </div>
+            <div class="topbar-search">
+                <input type="text" id="search-input" placeholder="Sök (t.ex Kalmar slott)..." aria-label="Sök Kultur-Småland" title="Sök">
+
+                <span class="search-icon"><img src="/icons/search.svg" alt="Sök"></span>
+            </div>
+        </div>
+    </header>
     <div class="mobile-menu-row">
         <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Öppna meny">☰</button>
     </div>
 
     <div class="layout">
         <aside class="sidebar">
-            
+
             <div class="filter-group">
                 <button class="filter-toggle" data-group="kategori">Kategori <span class="arrow">›</span></button>
                 <div class="filter-options" data-group="kategori" id="category-checkboxes">
@@ -47,10 +50,10 @@
             <div class="filter-group">
                 <button class="filter-toggle" data-group="omrade">Kommun <span class="arrow">›</span></button>
                 <div class="filter-options" data-group="omrade" id="municipality-checkboxes">
-                    </div>
+                </div>
             </div>
 
-         <div class="filter-group">
+            <div class="filter-group">
                 <button class="filter-toggle" data-group="avstand">Avstånd <span class="arrow">›</span></button>
                 <div class="filter-options" data-group="avstand">
                     <label class="checkbox-label">
