@@ -1,15 +1,11 @@
 const apiKey = "tsShv4yJ";
 
-
-
 async function fetchController(controller, lat = null, lng = null) {
   let method = "getall";
   let params = "&limit=9999";
   
-  
   if (lat !== null && lng !== null) {
     method = "getfromlatlng";
-    
     params = `&lat=${lat}&lng=${lng}&radius=1000&limit=9999`;
   }
 
@@ -26,31 +22,22 @@ async function fetchController(controller, lat = null, lng = null) {
 }
 
 export async function fetchAllData(userLat = null, userLng = null) {
-  
   const establishments = await fetchController("establishment", userLat, userLng);
   
   const allData = [...establishments];
-  const keywords = ["museum", "slott", "kyrka"];
+  const validCategories = ["museum", "slott", "kyrka"];
   
   const filteredData = allData.filter((place) => {
     if (place.id === "660" || place.id === "517" || place.id === "163") return false;
     
-    const name = place.name ? place.name.toLowerCase() : "";
-    const desc = place.description ? place.description.toLowerCase() : "";
+    const category = place.description ? place.description.toLowerCase().trim() : "";
     
-    const matchKeyword = keywords.find(
-      (keyword) => desc.includes(keyword) || name.includes(keyword),
-    );
-    
-    if (matchKeyword) {
-      place.customCategory = matchKeyword;
+    if (validCategories.includes(category)) {
+      place.customCategory = category; 
       
-    
       if (place.distance_in_km !== undefined && place.distance_in_km !== null) {
-        
         place.distance = parseFloat(place.distance_in_km);
       } else {
-      
         place.distance = 999; 
       }
       

@@ -157,7 +157,11 @@ const backLink = document.getElementById("back-link");
 if (backLink) {
   backLink.addEventListener("click", (e) => {
     e.preventDefault();
-    window.history.back();
+    if (document.referrer === "" || !document.referrer.includes(window.location.hostname)) {
+      window.location.href = "index.html";
+    } else {
+      window.history.back();
+    }
   });
 }
 
