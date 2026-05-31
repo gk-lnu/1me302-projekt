@@ -23,32 +23,22 @@ async function fetchController(controller, lat = null, lng = null) {
 
 export async function fetchAllData(userLat = null, userLng = null) {
   const establishments = await fetchController("establishment", userLat, userLng);
-  
-  const allData = [...establishments];
   const validCategories = ["museum", "slott", "kyrka"];
   
-  const filteredData = allData.filter((place) => {
+  const filteredData = establishments.filter((place) => {
     if (place.id === "660" || place.id === "517" || place.id === "163") return false;
     
     const category = place.description ? place.description.toLowerCase().trim() : "";
     
     if (validCategories.includes(category)) {
       place.customCategory = category; 
-      
-      if (place.distance_in_km !== undefined && place.distance_in_km !== null) {
-        place.distance = parseFloat(place.distance_in_km);
-      } else {
-        place.distance = 999; 
-      }
-      
+      place.distance = place.distance_in_km ? parseFloat(place.distance_in_km) : 999;
       return true;
     }
     return false;
   });
   
-  return Array.from(
-    new Map(filteredData.map((item) => [item.name, item])).values(),
-  );
+  return filteredData;
 }
 
 export async function fetchSingle(id) {
