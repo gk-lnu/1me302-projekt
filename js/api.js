@@ -1,4 +1,4 @@
-import { API_KEY } from './config.js';
+const API_KEY = "tsShv4yJ"
 
 async function fetchController(controller, lat = null, lng = null) {
   let method = "getall";
