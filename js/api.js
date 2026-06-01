@@ -1,4 +1,4 @@
-const apiKey = "tsShv4yJ";
+import { API_KEY } from './config.js';
 
 async function fetchController(controller, lat = null, lng = null) {
   let method = "getall";
@@ -9,7 +9,7 @@ async function fetchController(controller, lat = null, lng = null) {
     params = `&lat=${lat}&lng=${lng}&radius=1000&limit=9999`;
   }
 
-  const url = `https://smapi.lnu.se/api/?api_key=${apiKey}&controller=${controller}&method=${method}${params}`;
+  const url = `https://smapi.lnu.se/api/?api_key=${API_KEY}&controller=${controller}&method=${method}${params}`;
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -42,7 +42,7 @@ export async function fetchAllData(userLat = null, userLng = null) {
 }
 
 export async function fetchSingle(id) {
-  const urlEstablishment = `https://smapi.lnu.se/api/?api_key=${apiKey}&controller=establishment&method=getall&ids=${id}`;
+  const urlEstablishment = `https://smapi.lnu.se/api/?api_key=${API_KEY}&controller=establishment&method=getall&ids=${id}`;
 
   try {
     let response = await fetch(urlEstablishment);
@@ -82,8 +82,7 @@ export function starRating(rating) {
             <path d="M723.158,715.651C728.61,700.841 742.718,691 758.5,691C774.282,691 788.39,700.841 793.842,715.651L923.226,1067.174C926.595,1076.327 932.605,1084.273 940.495,1090.005C948.385,1095.738 957.8,1098.998 967.545,1099.374L1341.845,1113.799C1357.616,1114.407 1371.334,1124.784 1376.211,1139.793C1381.088,1154.803 1376.089,1171.262 1363.688,1181.023L1069.351,1412.701C1061.688,1418.734 1055.988,1426.905 1052.974,1436.181C1049.961,1445.456 1049.769,1455.417 1052.423,1464.802L1154.369,1825.24C1158.664,1840.426 1153.035,1856.68 1140.267,1865.957C1127.499,1875.233 1110.301,1875.564 1097.185,1866.786L785.891,1658.449C777.786,1653.024 768.253,1650.129 758.5,1650.129C748.747,1650.129 739.214,1653.024 731.109,1658.449L419.815,1866.786C406.699,1875.564 389.501,1875.233 376.733,1865.957C363.965,1856.68 358.336,1840.426 362.631,1825.24L464.577,1464.802C467.231,1455.417 467.039,1445.456 464.026,1436.181C461.012,1426.905 455.312,1418.734 447.649,1412.701L153.312,1181.023C140.911,1171.262 135.912,1154.803 140.789,1139.793C145.666,1124.784 159.384,1114.407 175.155,1113.799L549.455,1099.374C559.2,1098.998 568.615,1095.738 576.505,1090.005C584.395,1084.273 590.405,1076.327 593.774,1067.174L723.158,715.651Z" style="fill:rgb(136,49,0);stroke:rgb(8,6,5);stroke-width:20.83px;"/>
         </g>
     </g>
-</svg>
-`;
+</svg>`;
 
   let html = "";
 
