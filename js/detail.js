@@ -91,7 +91,7 @@ function renderDetail(place, distance) {
             <p class="details-desc">${descriptionText}</p>
         </div>
         <div class="details-sidebar">
-        <div class="info-box"><small>Användarbetyg</small><div>${starsHTML}</div></div>
+        <div class="info-box"><small>Betyg</small><div>${starsHTML}</div></div>
             <div class="info-box"><small>Prisnivå</small><p>${priceText}</p></div>
             <div class="info-box"><small>Adress</small><p>${fullAddress}</p></div>
             <div class="info-box"><small>Avstånd</small><p>${distText}</p></div>
