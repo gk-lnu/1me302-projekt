@@ -737,9 +737,8 @@ color: #a85c2c;
         border-right: 0;
     }
 
-    .topbar-name h1 {
-        font-size: 13px;
-        letter-spacing: 0;
+    .topbar-name {
+        grid-column: 1;
     }
 
     .topbar-sort {
@@ -750,27 +749,31 @@ color: #a85c2c;
         grid-column: 3;
     }
 
+    .topbar-name h1 {
+        font-size: 18px;
+        letter-spacing: 0;
+    }
+
     .topbar-sort label {
         display: none;
     }
 
     #sort-select {
-        font-size: 10px;
-        padding: 2px 4px;
-        
+        font-size: 14px;
+        padding: 4px 6px;
     }
 
     .topbar-search input {
-        font-size: 10px;
+        font-size: 14px;
         min-width: 0;
         width: 100%;
         padding-left: 6px;
     }
 
     .search-icon {
-        width: 14px;
-        height: 14px;
-        margin-bottom: 6px;
+        width: 18px;
+        height: 18px;
+        margin-bottom: 0;
     }
 
     .mobile-menu-row {
