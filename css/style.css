@@ -452,12 +452,11 @@ footer {
 
 .card-badge {
     position: absolute;
-    top: 8px;
-    left: 8px;
-    width: 44px;
-    height: 44px;
-    background: rgba(255, 248, 235, 0.95);
-    padding: 6px;
+    
+    width: 2rem;
+    height: 2rem;
+    background: rgba(255, 248, 235, 0.582);
+    padding: 3px;
     border-radius: 4px;
     z-index: 10;
     display: flex;
