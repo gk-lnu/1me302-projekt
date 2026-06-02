@@ -18,6 +18,8 @@ async function init() {
     document.getElementById("detail-container").innerHTML =
       "<p>Kunde inte ladda data</p>";
   }
+
+  document.title = `${place.name} - KulturSmåland`
 }
 
 function renderDetail(place, distance) {
